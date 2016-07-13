@@ -5,7 +5,6 @@ var Repos = React.createClass({
     return (
       <div>
         <h3>Repos</h3>
-        <p>{this.props.repos[0]}</p>
       </div>
     );
   }

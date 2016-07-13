@@ -1,19 +1,40 @@
 var React = require("react");
 var Router = require("react-router"); // need for later
+var ReactFireMixin = require("reactfire");
+var Firebase = require("firebase");
 
 var Repos = require("./GitHub/Repos");
 var UserProfile = require("./GitHub/UserProfile");
 var Notes = require("./Notes/Notes");
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDbKwjLB-LcLd8TQ-SMc0_qsh5x0mpiqoM",
+  authDomain: "react-github-notetaker-a0529.firebaseapp.com",
+  databaseURL: "https://react-github-notetaker-a0529.firebaseio.com",
+  storageBucket: "",
+};
+firebase.initializeApp(config);
+
 var Profile = React.createClass({
+  mixins: [ReactFireMixin],
   getInitialState: function () {
     return {
-      notes: [1,2,3],
+      notes: [],
       bio: {
         name: "Jon Snow"
       },
       repos: ["a", "b", "c"]
     }
+  },
+  componentDidMount: function () {
+    this.ref = Firebase.database().ref();
+    var childRef = this.ref.child(this.props.params.username);
+    console.log(childRef.key);
+    this.bindAsArray(childRef, "notes");
+  },
+  componentWillUnmount: function () {
+    this.unbind("notes");
   },
   render: function () {
     return (
@@ -24,10 +45,14 @@ var Profile = React.createClass({
             bio={this.state.bio} />
         </div>
         <div className="col-sm-4">
-          <Repos repos={this.state.repos} />
+          <Repos
+            username={this.props.params.username}
+            repos={this.state.repos} />
         </div>
         <div className="col-sm-4">
-          <Notes notes={this.state.notes} />
+          <Notes
+            username={this.props.params.username}
+            notes={this.state.notes} />
         </div>
       </div>
     );

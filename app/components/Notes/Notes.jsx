@@ -2,10 +2,10 @@ var React = require("react");
 
 var Notes = React.createClass({
   render: function () {
+    console.log("Notes", this.props.notes);
     return (
       <div>
-        <h3>Notes</h3>
-        <p>{this.props.notes[0]}</p>
+        <h3>Notes for {this.props.username}</h3>
       </div>
     );
   }
