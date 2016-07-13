@@ -1,6 +1,9 @@
 var React = require("react");
 
 var NotesList = React.createClass({
+  propTypes: {
+    notes: React.PropTypes.array.isRequired
+  },
   render: function () {
     console.log(this.props.notes);
     var notes = this.props.notes.map((note, index) => {
