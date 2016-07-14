@@ -1,12 +1,14 @@
 var React = require("react");
 
+var SearchGitHub = require("SearchGitHub");
+
 var Main = React.createClass({
   render: function () {
     return (
       <div className="main-container">
         <nav className="navbar navbar-default" role="navigation">
-          <div className="col-sm-7 col-sm-offset-2">
-            MENU
+          <div className="col-sm-10 col-sm-offset-1">
+            <SearchGitHub />
           </div>
         </nav>
         <div className="container">

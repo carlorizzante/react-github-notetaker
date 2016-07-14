@@ -3,6 +3,7 @@ var Router = require("react-router"); // need for later
 var ReactFireMixin = require("reactfire");
 var Firebase = require("firebase");
 
+var helpers = require("helpers");
 var Repos = require("./GitHub/Repos");
 var UserProfile = require("./GitHub/UserProfile");
 var Notes = require("./Notes/Notes");
@@ -21,24 +22,28 @@ var Profile = React.createClass({
   getInitialState: function () {
     return {
       notes: [],
-      bio: {
-        name: "Jon Snow"
-      },
-      repos: ["a", "b", "c"]
+      bio: {},
+      repos: []
     }
   },
   componentDidMount: function () {
+    var username = this.props.params.username;
     this.ref = Firebase.database().ref();
-    var childRef = this.ref.child(this.props.params.username);
-    console.log(childRef.key);
+    var childRef = this.ref.child(username);
     this.bindAsArray(childRef, "notes");
-    this.handleAddNote("new_note");
+
+    helpers.getGitHubInfo(username)
+      .then(function (data) {
+        this.setState({
+          repos: data.repos,
+          bio: data.bio
+        });
+      }.bind(this));
   },
   componentWillUnmount: function () {
     this.unbind("notes");
   },
   handleAddNote: function (newNote) {
-    console.log("Calling... handleAddNote with", newNote);
     // Ref to current username/key in Firebase
     var childRef = this.ref.child(this.props.params.username);
     // Sets new record into childRef.notes at its end

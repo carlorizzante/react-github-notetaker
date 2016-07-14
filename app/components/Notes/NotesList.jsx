@@ -5,7 +5,6 @@ var NotesList = React.createClass({
     notes: React.PropTypes.array.isRequired
   },
   render: function () {
-    console.log(this.props.notes);
     var notes = this.props.notes.map((note, index) => {
       return <li className="list-group-item" key={index}>{note[".value"]}</li>;
     });

@@ -11,6 +11,7 @@
   "author": "Carlo Rizzante <hello@carlorizzante.com> (http://carlorizzante.com)",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.13.0",
     "bootstrap": "^3.3.6",
     "firebase": "^3.2.0",
     "react": "^15.2.1",
