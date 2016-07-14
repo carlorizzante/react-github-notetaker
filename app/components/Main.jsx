@@ -11,6 +11,7 @@ var Main = React.createClass({
             <SearchGitHub />
           </div>
         </nav>
+        <a href="/public/">Home</a>
         <div className="container">
           {this.props.children}
         </div>

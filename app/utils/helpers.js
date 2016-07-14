@@ -1,11 +1,11 @@
-var axios = require("axios");
+import axios from "axios";
 
 function getRepos (username) {
-  return axios.get("https://api.github.com/users/" + username + "/repos");
+  return axios.get(`https://api.github.com/users/${username}/repos`);
 }
 
 function getBio (username) {
-  return axios.get("https://api.github.com/users/" + username);
+  return axios.get(`https://api.github.com/users/${username}`);
 }
 
 // var promiseObj = getRepos("carlorizzante");
@@ -15,7 +15,7 @@ function getBio (username) {
 //   }
 // );
 
-var helpers = {
+const helpers = {
   getGitHubInfo: function (username) {
     return axios.all([
       getRepos(username),
@@ -31,4 +31,4 @@ var helpers = {
   }
 }
 
-module.exports = helpers;
+export default helpers;
