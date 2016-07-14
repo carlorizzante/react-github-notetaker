@@ -32,9 +32,17 @@ var Profile = React.createClass({
     var childRef = this.ref.child(this.props.params.username);
     console.log(childRef.key);
     this.bindAsArray(childRef, "notes");
+    this.handleAddNote("new_note");
   },
   componentWillUnmount: function () {
     this.unbind("notes");
+  },
+  handleAddNote: function (newNote) {
+    console.log("Calling... handleAddNote with", newNote);
+    // Ref to current username/key in Firebase
+    var childRef = this.ref.child(this.props.params.username);
+    // Sets new record into childRef.notes at its end
+    childRef.child(this.state.notes.length).set(newNote);
   },
   render: function () {
     return (
@@ -52,7 +60,8 @@ var Profile = React.createClass({
         <div className="col-sm-4">
           <Notes
             username={this.props.params.username}
-            notes={this.state.notes} />
+            notes={this.state.notes}
+            addNote={this.handleAddNote} />
         </div>
       </div>
     );
